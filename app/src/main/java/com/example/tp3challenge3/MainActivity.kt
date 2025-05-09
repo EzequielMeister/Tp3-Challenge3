@@ -10,20 +10,38 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.tp3challenge3.ui.theme.Tp3Challenge3Theme
+import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Column
+import com.example.tp3challenge3.viewmodel.QuoteViewModel
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
+
+        val viewModel: QuoteViewModel by viewModels()
+        viewModel.loadQuotes()
+
         setContent {
             Tp3Challenge3Theme {
+                val quote by viewModel.quote.collectAsState()
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    if (quote != null) {
+                        Greeting(
+                            quote = quote!!.quote,
+                            author = quote!!.author,
+                            category = quote!!.category,
+                            modifier = Modifier.padding(innerPadding)
+                        )
+                    } else {
+                        Text("Cargando...")
+                    }
                 }
             }
         }
@@ -31,17 +49,11 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Tp3Challenge3Theme {
-        Greeting("Android")
+fun Greeting(quote: String, author: String, category: String, modifier: Modifier = Modifier) {
+    Column(modifier = modifier.padding(16.dp)) {
+        Text(text = quote)
+        Text(text = "- $author")
+        Text(text = "Categoría: $category")
     }
 }
+
