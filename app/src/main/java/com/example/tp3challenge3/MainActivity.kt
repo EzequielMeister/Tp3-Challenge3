@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import com.example.tp3challenge3.ui.theme.Tp3Challenge3Theme
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Button
 import com.example.tp3challenge3.viewmodel.QuoteViewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -37,7 +39,8 @@ class MainActivity : ComponentActivity() {
                             quote = quote!!.quote,
                             author = quote!!.author,
                             category = quote!!.category,
-                            modifier = Modifier.padding(innerPadding)
+                            modifier = Modifier.padding(innerPadding),
+                            refresh = { viewModel.loadQuotes() }
                         )
                     } else {
                         Text("Cargando...")
@@ -49,11 +52,22 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(quote: String, author: String, category: String, modifier: Modifier = Modifier) {
+fun Greeting(quote: String, author: String, category: String, modifier: Modifier = Modifier, refresh: () -> Unit) {
     Column(modifier = modifier.padding(16.dp)) {
-        Text(text = quote)
-        Text(text = "- $author")
-        Text(text = "Categoría: $category")
+        Row(modifier = Modifier.padding(8.dp)) {
+            Text(text = "Frase: $quote")
+        }
+        Row(modifier = Modifier.padding(8.dp)) {
+            Text(text = "Autor:  $author")
+        }
+        Row(modifier = Modifier.padding(8.dp)) {
+            Text(text = "Categoría: $category")
+        }
+        Row(modifier = Modifier.padding(8.dp)) {
+            Button(onClick = refresh) {
+                Text(text = "Refresh")
+            }
+        }
     }
 }
 
