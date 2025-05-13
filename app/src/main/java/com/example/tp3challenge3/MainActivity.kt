@@ -79,11 +79,28 @@ fun Greeting(
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Frases del día",
+                style = MaterialTheme.typography.headlineSmall
+            )
+            Text(
+                text = "Genera frases motivadoras donde quiera que vayas.",
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+        }
 
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f), 
+                .weight(1f),
             shape = MaterialTheme.shapes.large,
             elevation = CardDefaults.cardElevation(8.dp)
         ) {
@@ -118,6 +135,7 @@ fun Greeting(
         }
     }
 }
+
 
 
 
