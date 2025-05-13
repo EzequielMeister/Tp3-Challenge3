@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 // que convierte las respuestas JSON a objetos Kotlin.
 
 object RetrofitClient {
-    private const val BASE_URL = "https://api.api-ninjas.com/"  // CAMBIARLA
+    private const val BASE_URL = "https://api.api-ninjas.com"  // CAMBIARLA
 
     val apiService: QuoteApiService by lazy {
         Retrofit.Builder()
